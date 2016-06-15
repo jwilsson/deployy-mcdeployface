@@ -35,9 +35,10 @@ app.post('/', (req, res) => {
 
     if (config.repos[target]) {
         build(target, config.repos[target]);
+        res.status(200).send();
+    } else {
+        res.status(400).send();
     }
-
-    res.status(200).send();
 });
 
 app.listen(config.port, config.host);
