@@ -16,7 +16,13 @@ async function build (args) {
     };
 
     for (let i = 0; i < commands.length; i++) {
-        console.log(`Running ${ commands[i] }...`);
+        const date = (new Date()).toLocaleDateString('sv-SE', {
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+        });
+
+        console.log(`${ date } Running ${ commands[i] }...`);
         await childProcess.exec(commands[i], options);
         console.log('Done');
     }
