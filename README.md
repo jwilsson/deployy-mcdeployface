@@ -3,10 +3,10 @@
 A simple, stupid Node-based deploy script working with GitHub Webhooks.
 
 ## Usage example
-I'm running it via [forever](https://github.com/foreverjs/forever) like this:
+I'm running and watching it via [forever](https://github.com/foreverjs/forever) like this:
 
 ```bash
-forever start dist/index.js /path/to/config.json
+forever start --watch --watchDirectory dist dist/index.js /path/to/config.json
 ```
 
 Then, whenever a push to a GitHub repo is made, this script will be pinged and perform the steps outlined for that repo.
@@ -22,7 +22,8 @@ For example:
             "path": "/local/path/to/repo",
             "commands": [
                 "git pull",
-                "npm install"
+                "npm install",
+                "npm run build"
             ]
         }
     }
