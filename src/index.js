@@ -34,7 +34,7 @@ app.post('/', (req, res) => {
     const target = req.query.target;
 
     if (config.repos[target]) {
-        if(req.get('HTTP_X_GITHUB_EVENT') && req.get('HTTP_X_GITHUB_EVENT') === 'push'){
+        if (req.get('x-github-event') && req.get('x-github-event') === 'push') {
             build(target, config.repos[target]);
             res.status(200).send();
         } else {
