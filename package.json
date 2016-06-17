@@ -1,5 +1,13 @@
 {
   "name": "deployy-mcdeployface",
+  "author": "Jonathan Wilsson <jonathan.wilsson@gmail.com>",
+  "contributors": [
+    "Oskar Risberg <kokarn@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jwilsson/deployy-mcdeployface.git"
+  },
   "main": "./dist",
   "dependencies": {
     "child-process-promise": "^2.0.2",
@@ -16,5 +24,6 @@
     "plugins": [
       "transform-async-to-generator"
     ]
-  }
+  },
+  "license": "MIT"
 }
