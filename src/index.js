@@ -11,11 +11,13 @@ const app = express();
 
 let config = false;
 
-async function build (args) {
+async function build (target, args) {
     const commands = args.commands;
     const options = {
         cwd: args.path,
     };
+
+    console.log(`Deploying ${ target }...`);
 
     for (let i = 0; i < commands.length; i++) {
         const date = (new Date()).toLocaleDateString('sv-SE', {
@@ -34,8 +36,8 @@ app.post('/', (req, res) => {
     const target = req.query.target;
 
     if (config.repos[target]) {
-        if(req.get('HTTP_X_GITHUB_EVENT') && req.get('HTTP_X_GITHUB_EVENT') === 'push'){
-            build(config.repos[target]);
+        if (req.get('x-github-event') && req.get('x-github-event') === 'push') {
+            build(target, config.repos[target]);
             res.status(200).send();
         } else {
             res.status(401).send();
