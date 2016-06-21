@@ -24,6 +24,9 @@ Running and watching it via [pm2](http://pm2.keymetrics.io/):
 pm2 start --watch dist/ start dist/index.js -- /path/to/config.json
 ```
 
+When you start you will get a list of what webhooks to add to each repo.  
+The URL to ping should include a name of the repo in a `target` query string, `http://example.com:1234/?target=deployy-mcdeployface` will trigger a deploy for this script.
+
 Then, whenever a push to a GitHub repo is made, this script will be pinged and perform the steps outlined for that repo.
 
 For example:
@@ -43,5 +46,3 @@ For example:
     }
 }
 ```
-
-The URL to ping should include a name of the repo in a `target` query string, `http://example.com:1234/?target=deployy-mcdeployface` will trigger a deploy for this script.
