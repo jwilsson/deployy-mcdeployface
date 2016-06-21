@@ -29,7 +29,17 @@ async function build (target, args) {
         });
 
         console.log(`${ date } Running ${ commands[i] }...`);
-        await childProcess.exec(commands[i], options);
+
+        try {
+            await childProcess.exec(commands[i], options);
+        } catch (e) {
+            if (config.stopOnError) {
+                console.error(`Aborted due to error: ${ e.message }`);
+
+                break;
+            }
+        }
+
         console.log('Done');
     }
 }

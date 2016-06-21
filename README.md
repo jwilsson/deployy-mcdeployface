@@ -35,6 +35,7 @@ For example:
 {
     "port": 1234,
     "host": "example.com",
+    "stopOnError": true,
     "repos": {
         "deployy-mcdeployface": {
             "path": "/local/path/to/repo",
