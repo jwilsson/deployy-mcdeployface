@@ -3,10 +3,16 @@
 A simple, stupid Node-based deploy script working with GitHub Webhooks.
 
 ## Usage example
-I'm running and watching it via [forever](https://github.com/foreverjs/forever) like this:
+Running and watching it via [forever](https://github.com/foreverjs/forever):
 
 ```bash
 forever start --watch --watchDirectory dist dist/index.js /path/to/config.json
+```
+
+Running and watching it via [pm2](http://pm2.keymetrics.io/):
+
+```bash
+pm2 start --watch dist/ start dist/index.js -- /path/to/config.json
 ```
 
 Then, whenever a push to a GitHub repo is made, this script will be pinged and perform the steps outlined for that repo.
