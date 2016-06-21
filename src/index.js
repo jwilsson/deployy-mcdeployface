@@ -1,9 +1,10 @@
 'use strict';
 
-const childProcess = require('child-process-promise');
-const express = require('express');
 const path = require('path');
 const fs = require('fs');
+
+const childProcess = require('child-process-promise');
+const express = require('express');
 
 const configPath = path.resolve(process.cwd(), process.argv.slice().pop());
 const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
