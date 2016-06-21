@@ -30,7 +30,6 @@ For example:
 
 ```json
 {
-    "host": "example.com",
     "port": 1234,
     "repos": {
         "deployy-mcdeployface": {

@@ -2,9 +2,11 @@
 
 const path = require('path');
 const fs = require('fs');
+const dns = require('dns');
 
 const childProcess = require('child-process-promise');
 const express = require('express');
+const publicIp = require('public-ip');
 
 const configPath = path.resolve(process.cwd(), process.argv.slice().pop());
 const app = express();
@@ -30,6 +32,22 @@ async function build (target, args) {
         await childProcess.exec(commands[i], options);
         console.log('Done');
     }
+}
+
+function getHostname () {
+    return new Promise((resolve, reject) => {
+        publicIp.v4().then(ip => {
+            let returnName = ip;
+
+            dns.lookupService(ip, 80, (err, hostname, service) => {
+                if(!err){
+                    returnName = hostname;
+                }
+
+                resolve(returnName);
+            });
+        });
+    });
 }
 
 app.post('/', (req, res) => {
@@ -66,6 +84,13 @@ fs.access(configPath, fs.R_OK, (err) => {
     }
 
     if(config){
-        app.listen(config.port, config.host);
+        app.listen(config.port, async () => {
+            let hostname = await getHostname();
+            console.log('Service up and running on port', config.port);
+            console.log('Please add the following webhooks if they don\'t exist already');
+            for(let repo in config.repos){
+                console.log(repo, '| http://' + hostname + ':' + config.port + '/?target=' + repo);
+            }
+        });
     }
 });
