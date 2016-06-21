@@ -2,6 +2,15 @@
 
 A simple, stupid Node-based deploy script working with GitHub Webhooks.
 
+## Setup
+
+```bash
+git clone https://github.com/jwilsson/deployy-mcdeployface.git
+cd deployy-mcdeployface/
+npm install
+npm run build
+```
+
 ## Usage example
 Running and watching it via [forever](https://github.com/foreverjs/forever):
 
