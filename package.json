@@ -18,7 +18,8 @@
     "babel-plugin-transform-async-to-generator": "^6.8.0"
   },
   "scripts": {
-    "build": "babel src -d dist"
+    "build": "babel src -d dist",
+    "watch": "babel --watch src -d dist"
   },
   "babel": {
     "plugins": [
