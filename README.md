@@ -34,6 +34,7 @@ For example:
 ```json
 {
     "port": 1234,
+    "host": "example.com",
     "repos": {
         "deployy-mcdeployface": {
             "path": "/local/path/to/repo",

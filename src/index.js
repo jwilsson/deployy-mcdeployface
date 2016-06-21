@@ -85,7 +85,12 @@ fs.access(configPath, fs.R_OK, (err) => {
 
     if(config){
         app.listen(config.port, async () => {
-            let hostname = await getHostname();
+            let hostname = config.host;
+
+            if (!hostname) {
+                hostname = await getHostname();
+            }
+
             console.log('Service up and running on port', config.port);
             console.log('Please add the following webhooks if they don\'t exist already');
             for(let repo in config.repos){
