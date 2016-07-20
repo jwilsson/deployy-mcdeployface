@@ -12,16 +12,16 @@ npm run build
 ```
 
 ## Usage example
-Running and watching it via [forever](https://github.com/foreverjs/forever):
+Running via [forever](https://github.com/foreverjs/forever):
 
 ```bash
-forever start --watch --watchDirectory dist dist/index.js /path/to/config.json
+forever start /path/to/deployy-mcdeployface/dist/index.js /path/to/config.json
 ```
 
-Running and watching it via [pm2](http://pm2.keymetrics.io/):
+Running via [pm2](http://pm2.keymetrics.io/):
 
 ```bash
-pm2 start --watch dist/ start dist/index.js -- /path/to/config.json
+pm2 start /path/to/deployy-mcdeployface/dist/index.js -- /path/to/config.json
 ```
 
 When you start you will get a list of what webhooks to add to each repo.  
