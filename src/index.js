@@ -64,11 +64,17 @@ app.post('/', (req, res) => {
     const target = req.query.target;
 
     if (config.repos[target]) {
-        if (req.get('x-github-event') && req.get('x-github-event') === 'push') {
-            build(target, config.repos[target]);
-            res.status(200).send();
-        } else {
-            res.status(401).send();
+        switch (req.get('x-github-event')){
+            case 'push':
+                build(target, config.repos[target]);
+                res.status(200).send();
+                break;
+            case 'ping':
+                res.status(204).send();
+                break;
+            default:
+                res.status(401).send();
+                break;
         }
     } else {
         res.status(400).send();
