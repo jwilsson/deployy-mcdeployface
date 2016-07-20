@@ -48,3 +48,12 @@ For example:
     }
 }
 ```
+
+## Response codes
+
+| Code | Meaning                                                                                         |
+|------|-------------------------------------------------------------------------------------------------|
+| 200  | Got a valid GitHub push event                                                                   |
+| 204  | Got a valid GitHub ping event                                                                   |
+| 400  | Got a request without a target parameter                                                        |
+| 401  | Got an invalid message either with an unsupported GitHub event or without a GitHub event header |
