@@ -117,12 +117,12 @@ fs.access(configPath, fs.R_OK, (err) => {
             stopOnError: false,
         };
 
-        let config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
         config = Object.assign(defaults, config);
-
-        serve();
     } catch (err){
         console.error('Unable to parse config file "' + configPath + '". Please make sure it\'s valid.');
         process.exit(1);
     }
+
+    serve();
 });
