@@ -60,26 +60,42 @@ function getHostname () {
     });
 }
 
-app.post(config.path, (req, res) => {
-    const target = req.query.target;
+function serve() {
+  app.post(config.path, (req, res) => {
+      const target = req.query.target;
 
-    if (config.repos[target]) {
-        switch (req.get('x-github-event')){
-            case 'push':
-                build(target, config.repos[target]);
-                res.status(200).send();
-                break;
-            case 'ping':
-                res.status(204).send();
-                break;
-            default:
-                res.status(401).send();
-                break;
-        }
-    } else {
-        res.status(400).send();
-    }
-});
+      if (config.repos[target]) {
+          switch (req.get('x-github-event')){
+              case 'push':
+                  build(target, config.repos[target]);
+                  res.status(200).send();
+                  break;
+              case 'ping':
+                  res.status(204).send();
+                  break;
+              default:
+                  res.status(401).send();
+                  break;
+          }
+      } else {
+          res.status(400).send();
+      }
+  });
+
+  app.listen(config.port, async () => {
+      let hostname = config.host;
+
+      if (!hostname) {
+          hostname = await getHostname();
+      }
+
+      console.log('Service up and running on port', config.port);
+      console.log('Please add the following webhooks if they don\'t exist already');
+      for(let repo in config.repos){
+          console.log(repo, '| http://' + hostname + ':' + config.port + '/?target=' + repo);
+      }
+  });
+}
 
 if(configPath.length < 1 || configPath === __filename ){
     console.error('Didnt\'t get a config file, are you sure you specified one?');
@@ -101,26 +117,12 @@ fs.access(configPath, fs.R_OK, (err) => {
             stopOnError: false,
         };
 
-        config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        let config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
         config = Object.assign(defaults, config);
+
+        serve();
     } catch (err){
         console.error('Unable to parse config file "' + configPath + '". Please make sure it\'s valid.');
         process.exit(1);
-    }
-
-    if(config){
-        app.listen(config.port, async () => {
-            let hostname = config.host;
-
-            if (!hostname) {
-                hostname = await getHostname();
-            }
-
-            console.log('Service up and running on port', config.port);
-            console.log('Please add the following webhooks if they don\'t exist already');
-            for(let repo in config.repos){
-                console.log(repo, '| http://' + hostname + ':' + config.port + '/?target=' + repo);
-            }
-        });
     }
 });
