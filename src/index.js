@@ -60,7 +60,7 @@ function getHostname () {
     });
 }
 
-app.post('/', (req, res) => {
+app.post(config.path, (req, res) => {
     const target = req.query.target;
 
     if (config.repos[target]) {
@@ -95,6 +95,7 @@ fs.access(configPath, fs.R_OK, (err) => {
     try {
         const defaults = {
             host: '0.0.0.0',
+            path: '/',
             port: 80,
             repos: {},
             stopOnError: false,
